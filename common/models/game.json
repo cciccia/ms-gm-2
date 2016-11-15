@@ -1,0 +1,33 @@
+{
+    "name": "game",
+    "plural": "games",
+    "base": "PersistedModel",
+    "idInjection": true,
+    "options": {
+        "validateUpsert": true
+    },
+    "properties": {
+        "name": {
+            "type": "string",
+            "required": true
+        },
+        "url": {
+            "type": "string",
+            "required": true
+        }
+    },
+    "relations": {
+        "slots": {
+            "type": "embedsMany",
+            "model": "slot",
+            "property": "slots",
+            "options": {
+                "validate": true,
+                "forceId": false
+            }
+        }
+    },
+    "validations": [],
+    "acls": [],
+    "methods": {}
+}
