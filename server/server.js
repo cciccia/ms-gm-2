@@ -2,6 +2,13 @@
 
 var loopback = require('loopback');
 var boot = require('loopback-boot');
+var httpProxy = require('http-proxy');
+
+var proxy = httpProxy.createProxyServer();
+var host = process.env.APP_HOST || 'localhost';
+
+var bundle = require('./bundler.js');
+bundle();
 
 var app = module.exports = loopback();
 
@@ -17,6 +24,14 @@ app.start = function() {
     }
   });
 };
+
+app.all(['/public/*', '*.hot-update.json'], function (req, res) {
+    proxy.web(req, res, {
+        target: 'http://' + host + ':3001'
+    });
+});
+
+app.set('view engine', 'pug');
 
 // Bootstrap the application, configure models, datasources and middleware.
 // Sub-apps like REST API are mounted via boot scripts.
