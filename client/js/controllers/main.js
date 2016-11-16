@@ -1,9 +1,10 @@
 import angular from 'angular';
 
 class MainCtrl {
-    constructor() {
-        this.bonesaw = 6;
+    constructor(Alignment) {
+        this.bonesaw = Alignment.count();
     }
 }
+MainCtrl.$inject = ['Alignment']
 
 export default MainCtrl;
