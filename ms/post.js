@@ -10,10 +10,6 @@ login()
         return agent
             .get(`${config.targetRoot}/posting.php?mode=reply&f=90&t=64192`)
             .then(res => {
-                if (res.header['set-cookie']) {
-                    const cookies = res.header['set-cookie'].map(cookie.parse);
-                    console.log(cookies)
-                }
                 const $ = cheerio.load(res.text);
                 return {
                     agent,

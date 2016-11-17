@@ -36,7 +36,8 @@
     "strong-error-handler": "^1.0.1",
     "superagent-bluebird-promise": "^4.1.0",
     "superagent-logger": "^1.1.0",
-    "superagent-proxy": "^1.0.1"
+    "superagent-proxy": "^1.0.1",
+    "superagent-throttle": "^0.2.1"
   },
   "devDependencies": {
     "eslint": "^2.13.1",
