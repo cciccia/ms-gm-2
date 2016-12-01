@@ -8,10 +8,10 @@ const Throttle = require('superagent-throttle')
 
 login()
     .then(({agent}) => {
-        // get csrf token and timestamp for our target
         return agent
-            .get(`${config.targetRoot}/search.php?keywords=vote&t=59399&sf=msgonly&sd=a`)
+            .get(`${config.targetRoot}/search.php?keywords=vote&t=69128&sf=msgonly&sd=a`)
             .then(res => {
+                fs.writeFile('test.html', res.text);
                 const $ = cheerio.load(res.text);
                 const pageCount = ($('.rightside.pagination a strong:last-child').html());
                 return {
@@ -33,16 +33,23 @@ login()
             Array.from(new Array(parseInt(pageCount)).keys())
                 .map(i => {
                     return agent
-                        .get(`${config.targetRoot}/search.php?keywords=vote&t=59399&sf=msgonly&sd=a&start=${i*25}`)
+                        .get(`${config.targetRoot}/search.php?keywords=vote&t=69128&sf=msgonly&sd=a&start=${i*25}`)
                         .use(throttle.plugin())
                         .then(res => {
-                            console.log(i)
                             const messages = []
                             const $ = cheerio.load(res.text);
                             $('div.post').each((i, elem) => {
                                 const author = $(elem).find('dt.author a').text();
-                                messages.push(author);
-                            })
+
+                                $(elem)
+                                    .find('.content')
+                                    .remove('blockquote, div.quotecontent')
+                                    .find('span.bbvote, span.noboldsig')
+                                    .each((i, e) => {
+                                        messages.push({author,
+                                                       content: $(e).text()});
+                                    });
+                            });
                             return messages;
                         })
                         .catch(err => {
@@ -51,9 +58,21 @@ login()
                 }));     
     })
     .then(promises => {
+        const votePosts = [];
         promises.forEach(messages => {
             messages.forEach(message => {
-                console.log(message)
+                if (message.content !== null) {
+                    let sanitizedContent =/(unvote|vote)[:\s]*(.*)/ig.exec(message.content);
+
+                    if (sanitizedContent != null) {
+                        votePosts.push({
+                            author: message.author,
+                            action: sanitizedContent[1],
+                            content: sanitizedContent[2]
+                        });
+                    }
+                }
             })
         })
+        return votePosts;
     });

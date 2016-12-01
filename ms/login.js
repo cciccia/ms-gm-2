@@ -3,6 +3,11 @@ const config = require('../server/config');
 const cookie = require('cookie');
 
 module.exports = () => {
+    if (process.argv.length < 3) {
+        console.log("Missing: password");
+        process.exit(1);
+    }
+    
     const agent = request.agent({
         keepAliveTimeout: 30000
     });
@@ -14,7 +19,7 @@ module.exports = () => {
         .then(res => {
             if (res.header['set-cookie']) {
                 const cookies = res.header['set-cookie'].map(cookie.parse);
-                if (cookies.some(e => e['ms_phpbb3_u'] || "1" !== "1")) {
+                if (cookies.some(e => (e['ms_phpbb3_u'] || "1") !== "1")) {
                     return {agent};
                 } else {
                     throw 'Unable to login';
