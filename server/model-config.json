@@ -14,42 +14,38 @@
     ]
   },
   "User": {
-    "dataSource": "db"
+    "dataSource": "ms"
   },
   "AccessToken": {
-    "dataSource": "db",
+    "dataSource": "ms",
     "public": false
   },
   "ACL": {
-    "dataSource": "db",
+    "dataSource": "ms",
     "public": false
   },
   "RoleMapping": {
-    "dataSource": "db",
+    "dataSource": "ms",
     "public": false
   },
   "Role": {
-    "dataSource": "db",
+    "dataSource": "ms",
     "public": false
   },
   "game": {
-    "dataSource": "db",
+    "dataSource": "ms",
     "public": true
   },
   "alignment": {
-    "dataSource": "db",
-    "public": true
+    "dataSource": "ms",
+    "public": false
   },
-  "role": {
-    "dataSource": "db",
-    "public": true
-  },
-  "player": {
-    "dataSource": "db",
-    "public": true
+  "mafiaRole": {
+    "dataSource": "ms",
+    "public": false
   },
   "slot": {
-    "dataSource": "db",
-    "public": true
+    "dataSource": "ms",
+    "public": false
   }
 }

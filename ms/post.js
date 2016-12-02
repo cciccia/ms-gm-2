@@ -4,8 +4,8 @@ const config = require('../server/config');
 const fs = require('fs');
 const cookie = require('cookie');
 
-module.exports = (password, topicId) => {
-    return login(password)
+module.exports = (topicId) => {
+    return login()
         .then(({agent}) => {
             // get csrf token and timestamp for our target
             return agent

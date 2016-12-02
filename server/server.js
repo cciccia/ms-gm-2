@@ -7,9 +7,6 @@ var httpProxy = require('http-proxy');
 var proxy = httpProxy.createProxyServer();
 var host = process.env.APP_HOST || 'localhost';
 
-var bundle = require('./bundler.js');
-bundle();
-
 var app = module.exports = loopback();
 
 app.start = function() {

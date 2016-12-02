@@ -1,6 +1,21 @@
 {
-  "db": {
-    "name": "db",
-    "connector": "memory"
-  }
+    "db": {
+        "name": "db",
+        "connector": "memory"
+    },
+    "ms": {
+        "host": "192.168.99.100",
+        "port": 5432,
+        "url": "",
+        "database": "ms",
+        "password": "",
+        "name": "ms",
+        "user": "postgres",
+        "connector": "postgresql"
+    },
+    "transient": {
+        "name": "transient",
+        "connector": "transient"
+    }
+
 }

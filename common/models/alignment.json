@@ -14,11 +14,6 @@
     "color": {
       "type": "string",
       "required": true
-    },
-    "vanillaRole": {
-      "type": "string",
-      "required": true,
-      "default": "Vanilla"
     }
   },
   "validations": [],

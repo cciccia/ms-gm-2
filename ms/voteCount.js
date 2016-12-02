@@ -6,8 +6,8 @@ const cookie = require('cookie');
 const Promise = require('bluebird');
 const Throttle = require('superagent-throttle')
 
-module.exports = (password, topicId) => {
-    return login(password)
+module.exports = topicId => {
+    return login()
         .then(({agent}) => {
             return agent
                 .get(`${config.targetRoot}/search.php?keywords=vote&t=${topicId}&sf=msgonly&sd=a`)
@@ -42,11 +42,13 @@ module.exports = (password, topicId) => {
                                 $('div.post').each((i, elem) => {
                                     const author = $(elem).find('dt.author a').text();
 
-                                    $(elem)
+                                     $(elem)
                                         .find('.content')
-                                        .remove('blockquote, div.quotecontent')
                                         .find('span.bbvote, span.noboldsig')
+                                        .not($('blockquote span.bbvote, blockquote span.noboldsig'))
+                                        .not($('div.quotecontent span.bbvote, div.quotecontent span.noboldsig'))
                                         .each((i, e) => {
+                                            console.log("Match:", $(e).html())
                                             messages.push({author,
                                                            content: $(e).text()});
                                         });
@@ -63,13 +65,13 @@ module.exports = (password, topicId) => {
             promises.forEach(messages => {
                 messages.forEach(message => {
                     if (message.content !== null) {
-                        let sanitizedContent =/(unvote|vote)[:\s]*(.*)/ig.exec(message.content);
+                        let sanitizedContent =/^\s*(unvote|vote)[:\s]*(.*)/ig.exec(message.content);
 
                         if (sanitizedContent != null) {
                             votePosts.push({
                                 author: message.author,
-                                action: sanitizedContent[1],
-                                content: sanitizedContent[2]
+                                action: sanitizedContent[1].toLowerCase(),
+                                content: sanitizedContent[2].replace(/\W/g, '')
                             });
                         }
                     }

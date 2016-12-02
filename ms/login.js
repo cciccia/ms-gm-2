@@ -2,9 +2,12 @@ const request = require('superagent-bluebird-promise');
 const config = require('../server/config');
 const cookie = require('cookie');
 
-module.exports = password => {
-    if (!password) {
-        throw "Password not supplied";
+module.exports = () => {
+    let credentials;
+    try {
+        credentials = require('../credentials');
+    } catch (e) {
+        throw 'Credentials not set.  Please run "node boostrap-ms.js"';
     }
     
     const agent = request.agent({
@@ -14,7 +17,7 @@ module.exports = password => {
     return agent
         .post(`${config.targetRoot}/ucp.php?mode=login`)
         .type('form')
-        .send({username: 'borkjerfkin', password, login: 'login'})
+        .send({username: credentials.username, password: credentials.password, login: 'login'})
         .then(res => {
             if (res.header['set-cookie']) {
                 const cookies = res.header['set-cookie'].map(cookie.parse);

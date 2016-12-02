@@ -1,6 +1,6 @@
 {
-    "name": "game",
-    "plural": "games",
+    "name": "mafiaRole",
+    "plural": "mafiaRoles",
     "base": "PersistedModel",
     "idInjection": true,
     "options": {
@@ -11,16 +11,16 @@
             "type": "string",
             "required": true
         },
-        "topicId": {
-            "type": "number",
-            "required": true
+        "rolePMTemplate": {
+            "type": "string",
+            "required": false
         }
     },
     "validations": [],
     "relations": {
-        "slots": {
-            "type": "hasMany",
-            "model": "slot"
+        "alignment": {
+            "type": "belongsTo",
+            "model": "alignment"
         }
     },
     "acls": [],

@@ -10,29 +10,27 @@
         "number": {
             "type": "number",
             "required": true
-        }
-    },
-    "relations": {
-        "player": {
-            "type": "embedsOne",
-            "model": "player",
-            "property": "player",
-            "options": {
-                "validate": true,
-                "forceId": false
-            }
         },
-        "role": {
-            "type": "embedsOne",
-            "model": "role",
-            "property": "role",
-            "options": {
-                "validate": true,
-                "forceId": false
-            }
+        "player": {
+            "type": "string",
+            "required": true
+        },
+        "aliases": {
+            "type": ["string"],
+            "required": false
         }
     },
     "validations": [],
+    "relations": {
+        "mafiaRole": {
+            "type": "belongsTo",
+            "model": "mafiaRole"
+        },
+        "game": {
+            "type": "belongsTo",
+            "model": "game"
+        }
+    },
     "acls": [],
     "methods": {}
 }
