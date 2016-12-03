@@ -34,7 +34,7 @@ module.exports = topicId => {
                 Array.from(new Array(parseInt(pageCount)).keys())
                     .map(i => {
                         return agent
-                            .get(`${config.targetRoot}/search.php?keywords=vote&t=69128&sf=msgonly&sd=a&start=${i*25}`)
+                            .get(`${config.targetRoot}/search.php?keywords=vote&t=${topicId}&sf=msgonly&sd=a&start=${i*25}`)
                             .use(throttle.plugin())
                             .then(res => {
                                 const messages = []
