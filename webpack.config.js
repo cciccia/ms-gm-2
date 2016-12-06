@@ -1,10 +1,10 @@
 // function isExternal(module) {
 //     var userRequest = module.userRequest;
-    
+
 //     if (typeof userRequest !== 'string') {
 //         return false;
 //     }
-    
+
 //     return userRequest.indexOf('node_modules') >= 0;
 // }
 
@@ -56,7 +56,10 @@ var config = {
     },
     postcss: [autoprefixer],
     plugins: [
-        new Webpack.HotModuleReplacementPlugin()
+        new Webpack.HotModuleReplacementPlugin(),
+        new Webpack.ProvidePlugin({
+            _: "lodash"
+        })
     ]
 };
 

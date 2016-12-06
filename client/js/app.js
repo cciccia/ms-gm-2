@@ -7,7 +7,13 @@ import formlyBootstrap from 'angular-formly-templates-bootstrap';
 import lbServices from './services/lbServices';
 
 import MainCtrl from './controllers/main';
+import GameEditCtrl from './controllers/gameEdit';
 import AlignmentEditCtrl from './controllers/alignmentEdit';
+import RoleEditCtrl from './controllers/roleEdit';
+
+require('lodash');
+
+require("angular-xeditable");
 
 angular.module('msgm', [
     uiRouter,
@@ -15,10 +21,11 @@ angular.module('msgm', [
     ngMaterial,
     ngFormly,
     formlyBootstrap,
-    lbServices
+    lbServices,
+    'xeditable'
 ])
-    .config(['$stateProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider', '$httpProvider',
-	     function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $httpProvider) {
+    .config(['$stateProvider', '$urlRouterProvider', '$urlMatcherFactoryProvider', '$httpProvider', 'formlyConfigProvider',
+	     function($stateProvider, $urlRouterProvider, $urlMatcherFactoryProvider, $httpProvider, formlyConfigProvider) {
 		 $urlMatcherFactoryProvider.strictMode(false);
 
 		 $urlRouterProvider.when('', '/home');
@@ -31,21 +38,55 @@ angular.module('msgm', [
                      controllerAs: 'vm'
 		 });
 
-                 $stateProvider.state('alignment.add', {
-		     url: '/alignment/add',
+                 // $stateProvider.state('gameAdd', {
+		 //     url: '/game/add',
+		 //     templateUrl: '/public/templates/gameEdit.html',
+                 //     controller: 'GameEditCtrl',
+                 //     controllerAs: 'vm'
+		 // });
+
+                 // $stateProvider.state('gameEdit', {
+		 //     url: '/game/edit/:id',
+		 //     templateUrl: '/public/templates/gameEdit.html',
+                 //     controller: 'GameEditCtrl',
+                 //     controllerAs: 'vm'
+		 // });
+
+                 $stateProvider.state('alignmentEdit', {
+		     url: '/alignment/edit',
 		     templateUrl: '/public/templates/alignmentEdit.html',
                      controller: 'AlignmentEditCtrl',
                      controllerAs: 'vm'
 		 });
 
-                 $stateProvider.state('alignmentEdit', {
-		     url: '/alignment/edit/:id',
-		     templateUrl: '/public/templates/alignmentEdit.html',
-                     controller: 'AlignmentEditCtrl',
+                 $stateProvider.state('roleEdit', {
+		     url: '/role/edit/:id',
+		     templateUrl: '/public/templates/roleEdit.html',
+                     controller: 'RoleEditCtrl',
                      controllerAs: 'vm'
 		 });
+
+                 $stateProvider.state('roleAdd', {
+		     url: '/role/add',
+		     templateUrl: '/public/templates/roleEdit.html',
+                     controller: 'RoleEditCtrl',
+                     controllerAs: 'vm'
+		 });
+
+                 formlyConfigProvider.setType({
+                     name: 'grid',
+                     templateUrl: 'public/templates/grid.html',
+                     controller: /*@ngInject*/ $scope => {
+                         $scope.remove = row => {
+                             _.remove($scope.model, row);
+                         }
+                     }
+                 });
 
                  
 	     }])
     .controller('MainCtrl', MainCtrl)
+    .controller('GameEditCtrl', GameEditCtrl)
     .controller('AlignmentEditCtrl', AlignmentEditCtrl)
+    .controller('RoleEditCtrl', RoleEditCtrl)
+

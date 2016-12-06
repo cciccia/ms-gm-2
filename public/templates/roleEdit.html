@@ -1,0 +1,5 @@
+<form ng-submit="vm.submit(vm.model)" name="vm.form">
+  <formly-form model="vm.model" fields="vm.fields">
+    <button type="submit" ng-disabled="vm.form.$pristine" class="btn btn-default">Submit</button>
+  </formly-form>
+</form>

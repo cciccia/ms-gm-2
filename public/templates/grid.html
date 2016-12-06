@@ -1,0 +1,13 @@
+<table class="table table-bordered table-hover table-condensed">
+  <tr style="font-weight: bold">
+    <td ng-show="field.type !== 'hidden'" ng-repeat="field in options.templateOptions.fields">{{field.key}}</td>
+    <td></td>
+  </tr>
+  <tr ng-repeat="datum in model track by datum.id">
+    <td ng-show="field.type !== 'hidden'" ng-repeat="field in options.templateOptions.fields">
+      <input type="{{field.type}}" ng-model="datum[field.key]"></input>
+    </td>
+    <td><button class="btn btn-default" ng-click="remove(datum)">Delete</button>
+  </tr>
+</table>
+

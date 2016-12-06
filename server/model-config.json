@@ -38,11 +38,11 @@
   },
   "alignment": {
     "dataSource": "ms",
-    "public": false
+    "public": true
   },
   "mafiaRole": {
     "dataSource": "ms",
-    "public": false
+    "public": true
   },
   "slot": {
     "dataSource": "ms",
